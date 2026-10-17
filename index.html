@@ -27,6 +27,7 @@
     color-scheme: light;
   }
   * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
   html, body { max-width: 100%; }
   body {
     background:
@@ -134,8 +135,8 @@
   /* ---------- HOME ---------- */
   .hero { text-align: center; padding: 10px 0 8px; }
   .hero h1 {
-    margin: 0 auto 10px; max-width: 14ch;
-    font: 700 clamp(38px, 10vw, 68px) / 1.02 var(--f-display);
+    margin: 0 auto 10px; max-width: 18ch;
+    font: 700 clamp(34px, 9vw, 60px) / 1.05 var(--f-display);
     color: var(--rose-ink); text-wrap: balance;
   }
   .hero h1 em { font-style: normal; color: var(--lilac-deep); }
@@ -478,10 +479,6 @@
   .scene { position: relative; width: min(100%, 400px); margin: 0 auto; cursor: pointer; }
   .scene svg { display: block; width: 100%; height: auto; overflow: visible; }
   .sbubble { display: inline-block; margin: 0 auto 8px; padding: 10px 20px; background: #fff; border-radius: 20px; box-shadow: var(--shadow); font: 700 24px / 1.1 var(--f-hand); color: var(--rose-ink); text-wrap: balance; }
-  .patarm { transform-origin: 132px 190px; animation: pat 2.4s ease-in-out infinite; }
-  .ghead { animation: nod 2.4s ease-in-out infinite; }
-  @keyframes pat { 0%, 100% { transform: rotate(0); } 10% { transform: rotate(9deg); } 20% { transform: rotate(0); } 30% { transform: rotate(9deg); } 40% { transform: rotate(0); } }
-  @keyframes nod { 0%, 100% { transform: translateY(0); } 10% { transform: translateY(4px); } 20% { transform: translateY(0); } 30% { transform: translateY(4px); } 40% { transform: translateY(0); } }
   .blush-p { animation: blushP 1.2s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
   @keyframes blushP { 0%, 100% { opacity: 0.55; scale: 1; } 50% { opacity: 0.95; scale: 1.15; } }
   .pats { margin: 10px 0 0; font: 600 15px var(--f-display); color: var(--plum-soft); }
@@ -612,7 +609,6 @@
   .sprog .bar { flex: 1; }
   .sprog[hidden] { display: none; }
   .snote { margin: 0; max-width: 44ch; font-size: 14px; color: var(--plum-soft); text-wrap: balance; }
-  .linkrow { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
   a.btn { display: inline-flex; align-items: center; text-decoration: none; }
   .why { width: 100%; padding: 22px; text-align: left; background: var(--paper); border-radius: 22px; box-shadow: var(--shadow); }
   .why h3 { margin: 0 0 8px; font: 700 24px var(--f-display); color: var(--rose-ink); }
@@ -649,10 +645,61 @@
   .opt.picked { background: var(--blush); border-color: var(--pink-deep); color: var(--rose-ink); }
   .or { text-align: center; font: 700 22px var(--f-hand); color: var(--lilac-deep); }
 
+
+  /* pat-pat scene */
+  .scene .patarm { transform-origin: 176px 262px; animation: pat 0.8s ease-in-out infinite; }
+  .scene .g-head { transform-origin: 290px 330px; animation: headPat 0.8s ease-in-out infinite; }
+  .scene .boy { transform-origin: 125px 440px; animation: laugh 0.4s ease-in-out infinite alternate; }
+  .scene .eh, .scene .mh { opacity: 0; }
+  .scene .eo { animation: eyeO 0.8s step-end infinite; }
+  .scene .eh { animation: eyeH 0.8s step-end infinite; }
+  .scene .ono { font: 700 22px var(--f-hand); fill: #e84d8a; opacity: 0; animation: ono 0.8s ease-out infinite; }
+  .scene .ono.o2 { animation-delay: 0.4s; }
+  .scene .ono.o3 { font-size: 18px; fill: #8a63d2; animation: ono 1.6s ease-out 0.2s infinite; }
+  .scene .bird { transform-box: fill-box; transform-origin: 50% 100%; animation: birdB 2.2s ease-in-out infinite; }
+  .scene .wing { transform-origin: 346px 172px; animation: wingF 0.5s ease-in-out infinite alternate; }
+  @keyframes pat { 0%, 100% { rotate: -9deg; } 50% { rotate: 3deg; } }
+  @keyframes headPat { 0%, 100% { transform: translateY(0) scale(1, 1); } 50% { transform: translateY(5px) scale(1.03, 0.94); } }
+  @keyframes laugh { from { transform: translateY(0) rotate(-0.6deg); } to { transform: translateY(-4px) rotate(0.6deg); } }
+  @keyframes eyeO { 0% { opacity: 1; } 40% { opacity: 0; } 70% { opacity: 1; } }
+  @keyframes eyeH { 0% { opacity: 0; } 40% { opacity: 1; } 70% { opacity: 0; } }
+  @keyframes ono { 0% { opacity: 0; translate: 0 6px; } 25% { opacity: 1; } 80% { opacity: 0; translate: 6px -12px; } 100% { opacity: 0; } }
+  @keyframes birdB { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-4px) rotate(-3deg); } }
+  @keyframes wingF { from { rotate: 0deg; } to { rotate: -16deg; } }
+
+  /* garden: butterflies and petals */
+  .g-fx { position: absolute; inset: 0; z-index: 6; pointer-events: none; }
+  .bf { position: absolute; left: 50%; top: calc(var(--w) * 0.95); width: var(--s); margin: -12px 0 0 -14px; opacity: 0; animation: bfOut var(--t) cubic-bezier(0.2, 0.7, 0.3, 1) var(--dl) forwards; }
+  .bf-m { animation: bfWander var(--w2) ease-in-out calc(var(--dl) + var(--t)) infinite alternate; }
+  .bf-m svg { display: block; width: 100%; height: auto; overflow: visible; animation: bfTilt 1.8s ease-in-out infinite alternate; }
+  .bf .wl, .bf .wr { transform-box: fill-box; transform-origin: 100% 50%; animation: bfFlap 0.28s ease-in-out infinite alternate; }
+  @keyframes bfOut { 0% { opacity: 0; translate: 0 0; scale: 0.3; } 12% { opacity: 1; } 100% { opacity: 1; translate: var(--x) var(--y); scale: 1; } }
+  @keyframes bfWander { from { translate: 0 0; } to { translate: var(--wx) var(--wy); } }
+  @keyframes bfTilt { from { rotate: -12deg; } to { rotate: 12deg; } }
+  @keyframes bfFlap { from { scale: 1 1; } to { scale: 0.18 1; } }
+  .pt { position: absolute; top: -20px; width: var(--s); height: calc(var(--s) * 1.35); border-radius: 80% 0 80% 0; background: linear-gradient(135deg, #ffd2e3, #ff7fb0); opacity: 0; animation: ptFall var(--t) linear var(--dl) infinite; }
+  @keyframes ptFall { 0% { opacity: 0; translate: 0 0; rotate: 0deg; } 10% { opacity: 0.9; } 100% { opacity: 0; translate: var(--dx) calc(var(--w) * 1.9); rotate: 540deg; } }
+
+  /* song: hint + words */
+  .presshint { margin: 0; font: 700 28px / 1 var(--f-hand); color: var(--rose-ink); letter-spacing: 0.02em; animation: nudge 1.6s ease-in-out infinite; }
+  .presshint::before { content: "\2191  "; }
+  .presshint::after { content: "  \2191"; }
+  .playing .presshint { opacity: 0.5; animation: none; }
+  @keyframes nudge { 0%, 100% { translate: 0 0; } 50% { translate: 0 -4px; } }
+  .lyr { width: 100%; padding: 24px 20px; text-align: center; background: linear-gradient(180deg, #fff, var(--blush)); border-radius: 22px; box-shadow: var(--shadow); }
+  .lyr h3 { margin: 0 0 4px; font: 700 24px var(--f-display); color: var(--rose-ink); }
+  .lyr .by { margin: 0 0 14px; font-size: 13px; color: var(--plum-soft); }
+  .lyr p.l { margin: 0 0 8px; font: 700 22px / 1.25 var(--f-hand); color: var(--plum); opacity: 0.6; text-wrap: balance; }
+  .lyr p.gap { margin-bottom: 18px; }
+  .playing .lyr p.l { animation: lyrOn 1s ease both; animation-delay: calc(var(--i) * 1.3s); }
+  @keyframes lyrOn { from { opacity: 0.2; translate: 0 8px; } to { opacity: 1; translate: 0 0; color: var(--rose-ink); } }
+
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; transition-delay: 0s !important; }
     .fh { display: none; }
     .bouquet, .is-open .bouquet { opacity: 1; }
+    .g-fx { display: none; }
+    .lyr p.l { opacity: 1; }
   }
 </style>
 
@@ -701,7 +748,7 @@
     <!-- ================= HOME ================= -->
     <section class="view" id="v-home" tabindex="-1" aria-label="Home">
       <div class="hero">
-        <h1>Hey Clar! Welcome to <em>My Little World</em></h1>
+        <h1>Halo my beloved Clar sayang ! Welcome to <em>My Little World</em></h1>
         <svg class="squiggle" viewBox="0 0 220 14" fill="none" stroke="#ff8fb8" stroke-width="4" stroke-linecap="round" aria-hidden="true"><path d="M4 8 Q18 -2 32 8 T60 8 T88 8 T116 8 T144 8 T172 8 T200 8 T216 8"/></svg>
         <p class="lead">Okay okay, you found me! This is my tiny corner of the internet where everything is about you. (Bold of me to assume you'd mind.)</p>
         <p class="warn">Warning: this website contains extreme levels of love, questionable jokes, and an unnecessary number of hearts. Proceed with a big smile.</p>
@@ -717,6 +764,12 @@
             </div>
           </div>
           <div class="g-aura" aria-hidden="true"></div>
+          <div class="g-fx" id="gFx" aria-hidden="true">
+            <svg width="0" height="0" style="position:absolute" focusable="false"><defs>
+              <path id="bw" d="M0 0C-5-15-21-17-20-5C-19 3-8 5 0 1Z M0 1C-5 4-15 6-13 12C-11 16-3 11 0 3Z"/>
+              <path id="bd" d="M-9-6C-6-8-4-5-6-3C-9-3-10-4-9-6ZM-12 7C-9 6-8 8-9 9C-11 10-12 9-12 7Z" fill="#fff" fill-opacity=".7"/>
+            </defs></svg>
+          </div>
 
           <div class="g-float">
             <div class="g-shadow" aria-hidden="true"></div>
@@ -808,7 +861,7 @@
                     <g id="gyp" fill="#fff"><circle r="3.2"/><circle cx="-9" cy="10" r="2.4"/><circle cx="8" cy="-9" r="2.4"/><circle cx="10" cy="8" r="2.2"/><circle cx="-8" cy="-6" r="2.2"/><circle cx="0" cy="-16" r="2"/></g>
                     <g id="stemPaths" fill="none" stroke-linecap="round">
                       <path d="M200 480C205 410 195 300 200 160"/><path d="M200 480C190 420 130 360 105 245"/><path d="M200 480C212 420 270 360 298 235"/>
-                      <path d="M200 480C200 440 202 380 200 318"/><path d="M200 480C150 400 92 270 72 150"/><path d="M200 480C250 400 320 260 332 142"/><path d="M200 480C215 380 240 200 258 82"/>
+                      <path d="M200 480C200 440 202 380 200 318"/><path d="M200 480C150 400 92 270 72 150"/><path d="M200 480C250 400 320 260 332 142"/><path d="M200 480C215 380 240 200 258 82"/><path d="M200 480C186 380 150 230 138 108"/><path d="M200 480C216 380 256 240 264 126"/><path d="M200 480C180 420 120 380 70 322"/><path d="M200 480C222 420 282 380 334 322"/>
                     </g>
                     <path id="loopL" d="M200 452C168 412 118 424 128 462C136 488 182 474 200 452Z" fill="url(#gRib)"/>
                     <path id="tailL" d="M196 462C186 490 172 520 150 548L170 540L176 556C190 528 200 500 206 466Z" fill="url(#gRib)"/>
@@ -836,6 +889,10 @@
                   <g transform="translate(100 238) rotate(-24) scale(.74 .62)"><circle r="118" fill="url(#gDrop)"/><use href="#lilyWhite"/></g>
                   <g transform="translate(300 230) rotate(22) scale(.74 .64)"><circle r="118" fill="url(#gDrop)"/><use href="#lilyWhite"/></g>
                   <g transform="translate(200 322) rotate(6) scale(.66 .58)"><circle r="118" fill="url(#gDrop)"/><use href="#lilyPink"/></g>
+                  <g transform="translate(138 106) rotate(-30) scale(.5 .44)"><use href="#lilyWhite"/></g>
+                  <g transform="translate(264 124) rotate(28) scale(.5 .44)"><use href="#lilyPink"/></g>
+                  <g transform="translate(66 318) rotate(-46) scale(.46 .4)"><use href="#lilyPink"/></g>
+                  <g transform="translate(336 316) rotate(46) scale(.46 .4)"><use href="#lilyWhite"/></g>
 
                   <g transform="translate(200 495) rotate(-62) scale(-1 1)"><use href="#leaf"/></g>
                   <g transform="translate(200 495) rotate(62)"><use href="#leaf"/></g>
@@ -862,6 +919,9 @@
                     <circle class="tw" cx="386" cy="170" r="1.8" fill="#fff" style="animation-delay:-2.5s"/>
                     <circle class="tw" cx="14" cy="130" r="1.6" fill="#ffd6e8" style="animation-delay:-1.3s"/>
                     <circle class="tw" cx="320" cy="300" r="1.6" fill="#fff" style="animation-delay:-0.2s"/>
+                    <use class="tw" href="#spark" transform="translate(190 -6) scale(.7)" style="animation-delay:-1.2s"/>
+                    <use class="tw" href="#spark" transform="translate(12 80) scale(.6)" style="animation-delay:-2.4s"/>
+                    <use class="tw" href="#spark" transform="translate(390 60) scale(.6)" style="animation-delay:-.6s"/>
                   </g>
                 </svg>
               </div>
@@ -1031,10 +1091,22 @@
           <svg class="ic-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>
         </button>
         <div class="sprog" id="sprog" hidden><div class="bar"><i id="sBar"></i></div><span id="sTime">0:00</span></div>
-        <p class="snote" id="songNote" hidden>The song file isn't loaded in this page yet, so this is vibe mode. Tap Open the song, press play there, then come back and enjoy the show.</p>
-        <div class="linkrow">
-          <a class="btn ghost" href="https://open.spotify.com/search/LANY%20You" target="_blank" rel="noopener">Open on Spotify</a>
-          <a class="btn ghost" href="https://www.youtube.com/results?search_query=LANY+You" target="_blank" rel="noopener">Open on YouTube</a>
+        <p class="snote" id="songNote" hidden>The song file isn't loaded in this page yet, so this is vibe mode. Press the button again in a moment, or just enjoy the show.</p>
+        <p class="presshint">press the button</p>
+        <div class="lyr">
+          <h3>Words for this song</h3>
+          <p class="by">Written by me, just for you</p>
+          <p class="l" style="--i:1">You. It's always been you.</p>
+          <p class="l" style="--i:2">Through every goodbye that never stuck,</p>
+          <p class="l" style="--i:3">every maybe-later that turned into right now,</p>
+          <p class="l gap" style="--i:4">my heart kept walking back to your name.</p>
+          <p class="l" style="--i:5">I choose you on the loud days,</p>
+          <p class="l" style="--i:6">I choose you on the sleepy ones,</p>
+          <p class="l" style="--i:7">I choose you when we're a mess,</p>
+          <p class="l gap" style="--i:8">and I choose you when we're glowing.</p>
+          <p class="l" style="--i:9">So hold my hand, Clar,</p>
+          <p class="l" style="--i:10">let the music play on.</p>
+          <p class="l" style="--i:11">It was always you.</p>
         </div>
         <div class="why">
           <h3>Why it's ours</h3>
@@ -1211,54 +1283,112 @@
         <div id="sFinal" hidden>
           <p class="sbubble">Pat pat. You did so well today, Clar.</p>
           <div class="scene" id="scene" role="button" tabindex="0" aria-label="Tap to give Clar another head pat">
-            <svg viewBox="0 0 320 330" aria-hidden="true" focusable="false">
-              <ellipse cx="108" cy="306" rx="46" ry="8" fill="#6d4a80" fill-opacity=".18"/>
-              <ellipse cx="215" cy="306" rx="46" ry="8" fill="#6d4a80" fill-opacity=".18"/>
+            <svg viewBox="0 0 400 440" aria-hidden="true" focusable="false">
+              <defs>
+                <radialGradient id="cSkin" cx="45%" cy="38%" r="75%"><stop offset="0" stop-color="#fff1e6"/><stop offset="1" stop-color="#ffd8c2"/></radialGradient>
+                <linearGradient id="cHairB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a4655"/><stop offset=".45" stop-color="#2b2931"/><stop offset="1" stop-color="#1f1d25"/></linearGradient>
+                <linearGradient id="cHairG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#46414f"/><stop offset=".4" stop-color="#2a2630"/><stop offset="1" stop-color="#1c1a22"/></linearGradient>
+                <path id="cSp" d="M0-9Q1.400-1.400 9 0Q1.400 1.400 0 9Q-1.400 1.400-9 0Q-1.400-1.400 0-9Z" fill="#ffe27a"/>
+              </defs>
 
-              <!-- boy -->
-              <rect x="90" y="252" width="15" height="46" rx="7" fill="#3c3563"/>
-              <rect x="111" y="252" width="15" height="46" rx="7" fill="#3c3563"/>
-              <ellipse cx="97" cy="300" rx="14" ry="7" fill="#fff"/>
-              <ellipse cx="119" cy="300" rx="14" ry="7" fill="#fff"/>
-              <path d="M82 188Q64 216 70 246" stroke="#8a63d2" stroke-width="14" stroke-linecap="round" fill="none"/>
-              <circle cx="70" cy="249" r="7.5" fill="#ffdcc2"/>
-              <rect x="78" y="168" width="60" height="96" rx="24" fill="#8a63d2"/>
-              <path d="M96 168Q108 182 120 168" stroke="#6d49b3" stroke-width="4" fill="none" stroke-linecap="round"/>
-              <circle cx="62" cy="126" r="7" fill="#ffdcc2"/><circle cx="150" cy="126" r="7" fill="#ffdcc2"/>
-              <circle cx="106" cy="122" r="44" fill="#ffdcc2"/>
-              <path d="M62 118Q56 68 106 68Q156 68 150 118Q142 96 124 92Q110 102 92 94Q72 98 62 118Z" fill="#4a3428"/>
-              <circle cx="93" cy="128" r="3.8" fill="#4a2c4f"/><circle cx="121" cy="128" r="3.8" fill="#4a2c4f"/>
-              <circle cx="94.200" cy="126.700" r="1.2" fill="#fff"/><circle cx="122.200" cy="126.700" r="1.2" fill="#fff"/>
-              <path d="M87 119Q93 115 99 118M115 118Q121 115 127 119" stroke="#4a3428" stroke-width="2.4" stroke-linecap="round" fill="none"/>
-              <path d="M97 143Q107 151 117 143" stroke="#4a2c4f" stroke-width="3" stroke-linecap="round" fill="none"/>
-              <ellipse cx="84" cy="139" rx="7" ry="4" fill="#ff8fa8" fill-opacity=".55"/><ellipse cx="130" cy="139" rx="7" ry="4" fill="#ff8fa8" fill-opacity=".55"/>
+              <!-- GIRL: back hair, body -->
+              <path d="M232 276Q226 214 290 208Q354 214 348 276L356 440L224 440Z" fill="url(#cHairG)"/>
+              <rect x="276" y="300" width="28" height="30" rx="10" fill="#ffd8c2"/>
+              <path d="M232 440L238 356Q244 326 290 322Q336 326 342 356L348 440Z" fill="#fff4e3" stroke="#e8d8c0" stroke-width="1.600"/>
+              <path d="M266 326Q290 344 314 326" fill="none" stroke="#e8d8c0" stroke-width="3" stroke-linecap="round"/>
+              <path d="M240 350Q222 372 226 400L248 400Q250 374 254 354Z" fill="#fff4e3" stroke="#e8d8c0" stroke-width="1.600"/>
+              <path d="M340 350Q358 372 354 400L332 400Q330 374 326 354Z" fill="#fff4e3" stroke="#e8d8c0" stroke-width="1.600"/>
+              <path d="M228 400Q226 424 234 440L248 440Q246 420 247 400Z" fill="#ffd8c2"/>
+              <path d="M352 400Q354 424 346 440L332 440Q334 420 333 400Z" fill="#ffd8c2"/>
 
-              <!-- girl -->
-              <rect x="199" y="270" width="11" height="28" rx="5" fill="#ffdcc2"/>
-              <rect x="221" y="270" width="11" height="28" rx="5" fill="#ffdcc2"/>
-              <ellipse cx="204" cy="300" rx="12" ry="6" fill="#e84d8a"/><ellipse cx="226" cy="300" rx="12" ry="6" fill="#e84d8a"/>
-              <path d="M190 224L240 224L254 280Q215 290 176 280Z" fill="#ff8fb8"/>
-              <path d="M200 224Q215 238 230 224" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round"/>
-              <path d="M192 230Q182 248 188 262" stroke="#ff8fb8" stroke-width="11" stroke-linecap="round" fill="none"/>
-              <path d="M238 230Q248 248 242 262" stroke="#ff8fb8" stroke-width="11" stroke-linecap="round" fill="none"/>
-              <circle cx="188" cy="265" r="6" fill="#ffdcc2"/><circle cx="242" cy="265" r="6" fill="#ffdcc2"/>
-              <g class="ghead">
-                <path d="M172 172Q162 232 176 264Q215 274 254 264Q268 232 258 172Z" fill="#6b3d2e"/>
-                <circle cx="215" cy="178" r="38" fill="#ffdcc2"/>
-                <path d="M177 172Q178 136 215 136Q252 136 253 172Q238 156 215 162Q192 156 177 172Z" fill="#6b3d2e"/>
-                <path d="M178 170Q172 196 180 214" stroke="#6b3d2e" stroke-width="9" stroke-linecap="round" fill="none"/>
-                <path d="M252 170Q258 196 250 214" stroke="#6b3d2e" stroke-width="9" stroke-linecap="round" fill="none"/>
-                <path d="M196 183Q203 175 210 183M220 183Q227 175 234 183" stroke="#4a2c4f" stroke-width="3.4" stroke-linecap="round" fill="none"/>
-                <path d="M208 195Q215 202 222 195" stroke="#4a2c4f" stroke-width="3" stroke-linecap="round" fill="none"/>
-                <ellipse class="blush-p" cx="192" cy="193" rx="8" ry="5" fill="#ff7aa5"/><ellipse class="blush-p" cx="238" cy="193" rx="8" ry="5" fill="#ff7aa5"/>
-                <g transform="translate(246 146) rotate(18)"><ellipse cx="-9" cy="0" rx="9" ry="6" fill="#e84d8a"/><ellipse cx="9" cy="0" rx="9" ry="6" fill="#e84d8a"/><circle r="4" fill="#ff8fb8"/></g>
+              <!-- GIRL: head -->
+              <g class="g-head">
+                <ellipse cx="290" cy="268" rx="55" ry="52" fill="url(#cSkin)" stroke="#dcbca8" stroke-width="1.400"/>
+                <!-- eyes: shy, looking aside -->
+                <g class="eo">
+                  <ellipse cx="268" cy="277" rx="9.500" ry="11" fill="#3b2c30"/><ellipse cx="267" cy="279" rx="6.500" ry="8" fill="#5e4646"/>
+                  <circle cx="270.500" cy="273" r="3.400" fill="#fff"/><circle cx="264" cy="283" r="1.700" fill="#fff"/>
+                  <ellipse cx="312" cy="277" rx="9.500" ry="11" fill="#3b2c30"/><ellipse cx="311" cy="279" rx="6.500" ry="8" fill="#5e4646"/>
+                  <circle cx="314.500" cy="273" r="3.400" fill="#fff"/><circle cx="308" cy="283" r="1.700" fill="#fff"/>
+                  <path d="M255 262Q266 254 281 259M299 259Q314 254 325 262" fill="none" stroke="#2a2630" stroke-width="2.600" stroke-linecap="round"/>
+                </g>
+                <g class="eh" fill="none" stroke="#3b2c30" stroke-width="3.600" stroke-linecap="round">
+                  <path d="M257 281Q268 268 279 281"/><path d="M301 281Q312 268 323 281"/>
+                </g>
+                <!-- blush -->
+                <g class="blush-p">
+                  <ellipse cx="253" cy="297" rx="16" ry="9.500" fill="#ff7f8e" fill-opacity=".6"/><ellipse cx="327" cy="297" rx="16" ry="9.500" fill="#ff7f8e" fill-opacity=".6"/>
+                </g>
+                <g stroke="#ff5f78" stroke-width="1.800" stroke-linecap="round" opacity=".7">
+                  <path d="M245 292l5 8M252 291l5 8M259 290l5 8"/><path d="M321 290l5 8M328 291l5 8M335 292l5 8"/>
+                </g>
+                <!-- mouth -->
+                <path class="mo" d="M281 303Q285.500 299 290 303Q294.500 307 299 303" fill="none" stroke="#8a4a4f" stroke-width="2.400" stroke-linecap="round"/>
+                <path class="mh" d="M281 301Q290 311 299 301Q290 305 281 301Z" fill="#e0707f" stroke="#8a4a4f" stroke-width="1.800" stroke-linejoin="round"/>
+                <!-- sweat drop -->
+                <path d="M341 246Q347 257 341 262Q335 257 341 246Z" fill="#a8e0ff" stroke="#7cc4ee" stroke-width="1"/>
+                <!-- bangs + side hair -->
+                <path d="M234 272Q228 206 290 204Q352 206 346 272Q342 248 326 240Q316 254 300 238Q290 254 280 238Q266 254 254 240Q238 250 234 272Z" fill="url(#cHairG)"/>
+                <path d="M252 224Q290 208 330 226" fill="none" stroke="#6a6475" stroke-width="3" stroke-linecap="round" opacity=".5"/>
+                <path d="M236 262Q226 322 240 378Q250 340 252 292Q250 270 242 258Z" fill="url(#cHairG)"/>
+                <path d="M344 262Q354 322 340 378Q330 340 328 292Q330 270 338 258Z" fill="url(#cHairG)"/>
               </g>
 
-              <!-- patting arm -->
-              <g class="patarm">
-                <path d="M132 192Q172 166 204 138" stroke="#8a63d2" stroke-width="16" stroke-linecap="round" fill="none"/>
-                <circle cx="210" cy="130" r="12" fill="#ffdcc2"/>
-                <ellipse cx="200" cy="138" rx="5" ry="7" fill="#ffdcc2" transform="rotate(-30 200 138)"/>
+              <!-- BOY -->
+              <g class="boy">
+                <path d="M72 252Q92 214 125 232Q158 214 178 252Q158 268 125 262Q92 268 72 252Z" fill="#37333d"/>
+                <path d="M62 440L64 300Q66 250 118 244L132 244Q186 250 190 300L192 440Z" fill="#4b4752"/>
+                <path d="M92 300Q96 340 88 380M158 300Q154 340 164 380" fill="none" stroke="#3c3842" stroke-width="3" stroke-linecap="round" opacity=".7"/>
+                <path d="M104 244Q125 276 146 244Q125 256 104 244Z" fill="#2f2b34"/>
+                <path d="M112 258L110 300M138 258L140 300" stroke="#e5e0ea" stroke-width="3.400" stroke-linecap="round"/>
+                <circle cx="110" cy="303" r="2.800" fill="#e5e0ea"/><circle cx="140" cy="303" r="2.800" fill="#e5e0ea"/>
+                <path d="M86 372Q126 360 168 372L172 426Q126 436 82 426Z" fill="#433f4a" stroke="#38343e" stroke-width="1.600"/>
+                <path d="M72 262Q42 292 46 352Q48 396 58 432L86 428Q82 372 88 306Z" fill="#4b4752"/>
+                <ellipse cx="68" cy="436" rx="15" ry="11" fill="#ffd8c2"/>
+                <!-- head -->
+                <ellipse cx="62" cy="162" rx="11" ry="13" fill="url(#cSkin)" stroke="#dcbca8" stroke-width="1.400"/>
+                <ellipse cx="188" cy="162" rx="11" ry="13" fill="url(#cSkin)" stroke="#dcbca8" stroke-width="1.400"/>
+                <ellipse cx="125" cy="154" rx="66" ry="60" fill="url(#cSkin)" stroke="#dcbca8" stroke-width="1.400"/>
+                <ellipse cx="86" cy="176" rx="14" ry="8" fill="#ff9a9a" fill-opacity=".55"/><ellipse cx="164" cy="176" rx="14" ry="8" fill="#ff9a9a" fill-opacity=".55"/>
+                <path d="M84 158Q98 144 112 158M138 158Q152 144 166 158" fill="none" stroke="#2a2830" stroke-width="4.600" stroke-linecap="round"/>
+                <path d="M84 158l-5-3M166 158l5-3" stroke="#2a2830" stroke-width="3" stroke-linecap="round"/>
+                <path d="M100 178Q125 212 150 178Q125 186 100 178Z" fill="#e0606e" stroke="#7a3340" stroke-width="2.200" stroke-linejoin="round"/>
+                <path d="M113 192Q125 182 137 192Q125 204 113 192Z" fill="#ff9aa5"/>
+                <!-- hair -->
+                <path d="M54 158Q38 84 112 70Q152 62 186 84Q214 110 198 160Q192 130 174 118Q162 140 142 128Q126 146 106 126Q86 142 78 122Q62 132 54 158Z" fill="url(#cHairB)"/>
+                <path d="M58 150Q50 178 64 192Q62 170 70 152Z" fill="#2a2830"/><path d="M194 150Q202 178 188 192Q190 170 182 152Z" fill="#2a2830"/>
+                <path d="M120 76Q100 44 128 36Q118 54 134 74Z" fill="#2a2830"/>
+                <path d="M88 98Q116 80 152 94M140 102Q164 102 178 122" fill="none" stroke="#6a6577" stroke-width="3" stroke-linecap="round" opacity=".55"/>
+                <!-- patting arm -->
+                <g class="patarm">
+                  <path d="M176 262Q214 240 246 216" stroke="#4b4752" stroke-width="32" stroke-linecap="round" fill="none"/>
+                  <path d="M186 250Q214 232 238 214" stroke="#5f5a68" stroke-width="6" stroke-linecap="round" fill="none" opacity=".5"/>
+                  <ellipse cx="256" cy="209" rx="9" ry="5.500" transform="rotate(20 256 209)" fill="url(#cSkin)" stroke="#dcbca8" stroke-width="1.200"/>
+                  <path d="M252 206Q250 190 268 186Q290 182 298 192Q302 200 292 203Q276 208 252 206Z" fill="url(#cSkin)" stroke="#dcbca8" stroke-width="1.400"/>
+                  <path d="M284 187Q288 193 286 201M291 190Q294 196 292 202" fill="none" stroke="#dcbca8" stroke-width="1.200" stroke-linecap="round"/>
+                </g>
+              </g>
+
+              <!-- onomatopoeia -->
+              <text class="ono o1" x="296" y="180" transform="rotate(8 296 180)">pat!</text>
+              <text class="ono o2" x="320" y="202" transform="rotate(-6 320 202)">pat!</text>
+              <text class="ono o3" x="286" y="166" transform="rotate(-4 286 166)">rub rub~</text>
+
+              <!-- sparkles -->
+              <use class="tw" href="#cSp" transform="translate(340 214) scale(.9)" style="animation-delay:-.5s"/>
+              <use class="tw" href="#cSp" transform="translate(228 240) scale(.6)" style="animation-delay:-1.4s"/>
+              <use class="tw" href="#cSp" transform="translate(358 258) scale(.6)" style="animation-delay:-2.1s"/>
+              <use class="tw" href="#cSp" transform="translate(312 148) scale(.7)" style="animation-delay:-.9s"/>
+              <use class="tw" href="#cSp" transform="translate(250 166) scale(.55)" style="animation-delay:-2.6s"/>
+
+              <!-- little bird -->
+              <g class="bird">
+                <path d="M338 174L324 182L340 182Z" fill="#fff" stroke="#d8d2e0" stroke-width="1"/>
+                <ellipse cx="350" cy="173" rx="14" ry="10" fill="#fff" stroke="#d8d2e0" stroke-width="1.200"/>
+                <circle cx="362" cy="165" r="8" fill="#fff" stroke="#d8d2e0" stroke-width="1.200"/>
+                <path d="M369 164L377 167L369 169Z" fill="#ffb25e"/>
+                <circle cx="364" cy="163" r="1.700" fill="#4a2c4f"/><circle cx="360" cy="168" r="2.200" fill="#ffb3c6" fill-opacity=".7"/>
+                <g class="wing"><path d="M346 172Q334 156 322 166Q336 172 346 177Z" fill="#f2eef8" stroke="#d8d2e0" stroke-width="1"/></g>
               </g>
             </svg>
           </div>
@@ -1341,7 +1471,31 @@
 
   /* ---------- amplop lily ---------- */
   var gStack = $('gStack'), gEnv = $('gEnv'), gBouquet = $('gBouquet'), gAgain = $('gAgain');
-  var gOpen = false, gT1 = 0, gT2 = 0;
+  var gOpen = false, gT1 = 0, gT2 = 0, gT3 = 0, gT4 = 0;
+
+  var gFx = $('gFx');
+  var BF = [['#ff8fb8','#c2336f'],['#ffd86b','#f08a3c'],['#b79bff','#6a43c6'],['#8fe3ff','#3b8fd6'],['#ffffff','#e48bb6'],['#ff9fe0','#a63fa0']];
+  function bflySVG(c) {
+    return '<svg viewBox="-24 -20 48 40" focusable="false"><g class="wl" fill="' + c[0] + '" stroke="' + c[1] + '" stroke-width="1.2" stroke-linejoin="round"><use href="#bw"/><use href="#bd"/></g><g transform="scale(-1 1)"><g class="wr" fill="' + c[0] + '" stroke="' + c[1] + '" stroke-width="1.2" stroke-linejoin="round"><use href="#bw"/><use href="#bd"/></g></g><rect x="-1.6" y="-9" width="3.2" height="19" rx="1.6" fill="#4a2c4f"/><path d="M-.8-9Q-6-17-9-16M.8-9Q6-17 9-16" fill="none" stroke="#4a2c4f" stroke-width="1" stroke-linecap="round"/></svg>';
+  }
+  function spawnFx() {
+    clearFx();
+    var W = gStack.getBoundingClientRect().width || 300;
+    for (var i = 0; i < 14; i++) {
+      var side = i % 2 ? 1 : -1;
+      var b = document.createElement('div'); b.className = 'bf';
+      var sz = rnd(24, 40);
+      b.style.cssText = '--s:' + sz + 'px;--t:' + rnd(2.2, 3.6).toFixed(2) + 's;--dl:' + (0.9 + i * 0.22).toFixed(2) + 's;--x:' + Math.round(side * rnd(0.06, 0.52) * W) + 'px;--y:' + Math.round(-rnd(0.25, 1.05) * W) + 'px;--w2:' + rnd(2.4, 4.2).toFixed(2) + 's;--wx:' + Math.round(rnd(-40, 40)) + 'px;--wy:' + Math.round(rnd(-34, 34)) + 'px';
+      b.innerHTML = '<div class="bf-m">' + bflySVG(BF[i % BF.length]) + '</div>';
+      gFx.appendChild(b);
+    }
+    for (var j = 0; j < 16; j++) {
+      var q = document.createElement('i'); q.className = 'pt';
+      q.style.cssText = 'left:' + Math.round(rnd(0, 100)) + '%;--s:' + Math.round(rnd(8, 14)) + 'px;--t:' + rnd(5, 8).toFixed(1) + 's;--dl:' + (1.6 + j * 0.45).toFixed(2) + 's;--dx:' + Math.round(rnd(-50, 50)) + 'px';
+      gFx.appendChild(q);
+    }
+  }
+  function clearFx() { var n = gFx.querySelectorAll('.bf,.pt'); for (var k = 0; k < n.length; k++) n[k].remove(); }
   function setGarden(v) {
     if (v === gOpen) return;
     gOpen = v;
@@ -1350,14 +1504,17 @@
     gEnv.setAttribute('aria-expanded', String(v));
     gEnv.tabIndex = v ? -1 : 0;
     gEnv.setAttribute('aria-label', v ? 'Envelope opened' : 'Envelope. Tap to open');
-    clearTimeout(gT1); clearTimeout(gT2);
+    clearTimeout(gT1); clearTimeout(gT2); clearTimeout(gT3); clearTimeout(gT4);
     if (v) {
+      if (!reduce) spawnFx();
       gT1 = setTimeout(function () {
         var r = gBouquet.getBoundingClientRect();
-        popHearts(r.left + r.width / 2, r.top + r.height * 0.3, 22);
+        popHearts(r.left + r.width / 2, r.top + r.height * 0.3, 26);
       }, 1000);
+      gT3 = setTimeout(function () { var r = gBouquet.getBoundingClientRect(); popHearts(r.left + r.width * 0.3, r.top + r.height * 0.4, 14); }, 2400);
+      gT4 = setTimeout(function () { var r = gBouquet.getBoundingClientRect(); popHearts(r.left + r.width * 0.7, r.top + r.height * 0.35, 14); }, 3800);
       gT2 = setTimeout(function () { if (document.activeElement === gEnv) gAgain.focus({ preventScroll: true }); }, 2300);
-    } else { gEnv.focus({ preventScroll: true }); }
+    } else { clearFx(); gEnv.focus({ preventScroll: true }); }
   }
   gEnv.addEventListener('click', function () { if (!gOpen) setGarden(true); });
   gEnv.addEventListener('keydown', function (e) { if ((e.key === 'Enter' || e.key === ' ') && !gOpen) { e.preventDefault(); setGarden(true); } });
@@ -1689,7 +1846,7 @@
     $('pats').textContent = 'Pats given: ' + pats + (pats >= 25 ? ' (maximum happiness reached)' : pats >= 10 ? ' (she is glowing now)' : ' (tap the scene for more)');
     for (var i = 0; i < 3; i++) {
       var s = document.createElement('span'); s.className = 'sh';
-      s.style.cssText = 'left:' + (46 + rnd(-8, 18)) + '%;top:' + (30 + rnd(-6, 8)) + '%;--dx:' + Math.round(rnd(-30, 30)) + 'px;animation-delay:' + (i * 0.12) + 's';
+      s.style.cssText = 'left:' + (68 + rnd(-8, 12)) + '%;top:' + (36 + rnd(-6, 8)) + '%;--dx:' + Math.round(rnd(-30, 30)) + 'px;animation-delay:' + (i * 0.12) + 's';
       scene.appendChild(s); s.addEventListener('animationend', function () { this.remove(); });
     }
   }
