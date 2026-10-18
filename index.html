@@ -312,6 +312,7 @@
     border: 2px dashed rgba(138, 99, 210, 0.5);
     color: var(--plum-soft); font: 600 14px/1.25 var(--f-display);
   }
+  .shot.has-img { padding: 0; border: 0; background: var(--blush); }
   .shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .shot svg { display: block; margin: 0 auto 6px; width: 38px; height: 38px; }
   .pola figcaption { margin-top: 8px; text-align: center; font: 700 24px / 1.05 var(--f-hand); color: var(--plum); text-wrap: balance; }
@@ -574,7 +575,9 @@
   .playing .disc { animation-play-state: running; }
   .disc::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: conic-gradient(from 30deg, rgba(255, 255, 255, 0.16), transparent 18%, rgba(255, 255, 255, 0.1) 48%, transparent 66%, rgba(255, 255, 255, 0.16)); }
   @keyframes spin { to { rotate: 360deg; } }
-  .dlabel { position: absolute; inset: 33%; z-index: 1; border-radius: 50%; display: grid; place-content: center; text-align: center; background: radial-gradient(circle at 35% 30%, #ffb3cf, #e84d8a 65%, #b82f6b); }
+  .dlabel { position: absolute; inset: 17%; z-index: 1; border-radius: 50%; overflow: hidden; background: #2a1840; box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.18), 0 0 0 8px rgba(10, 5, 20, 0.55); }
+  .dlabel img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .dlabel::after { content: ""; position: absolute; left: 50%; top: 50%; width: 11%; aspect-ratio: 1; translate: -50% -50%; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fff, #e9dff5 70%); box-shadow: 0 0 0 3px rgba(60, 30, 90, 0.35); }
   .dlabel b { font: 700 clamp(18px, 6vw, 26px) / 1 var(--f-display); color: #fff; letter-spacing: 0.08em; }
   .dlabel small { font: 600 9px var(--f-display); letter-spacing: 0.24em; color: #ffe3ee; }
   .arm { position: absolute; top: 7%; right: 3%; width: 58%; height: 12px; z-index: 3; transform-origin: calc(100% - 8px) 50%; rotate: 8deg; transition: rotate 0.9s cubic-bezier(0.4, 0, 0.2, 1); filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.3)); }
@@ -671,7 +674,8 @@
   .g-fx { position: absolute; inset: 0; z-index: 6; pointer-events: none; }
   .bf { position: absolute; left: 50%; top: calc(var(--w) * 0.95); width: var(--s); margin: -12px 0 0 -14px; opacity: 0; animation: bfOut var(--t) cubic-bezier(0.2, 0.7, 0.3, 1) var(--dl) forwards; }
   .bf-m { animation: bfWander var(--w2) ease-in-out calc(var(--dl) + var(--t)) infinite alternate; }
-  .bf-m svg { display: block; width: 100%; height: auto; overflow: visible; animation: bfTilt 1.8s ease-in-out infinite alternate; }
+  .bf-m { will-change: transform; }
+  .bf-m .bimg { animation-duration: 0.3s; }
   .bf .wl, .bf .wr { transform-box: fill-box; transform-origin: 100% 50%; animation: bfFlap 0.28s ease-in-out infinite alternate; }
   @keyframes bfOut { 0% { opacity: 0; translate: 0 0; scale: 0.3; } 12% { opacity: 1; } 100% { opacity: 1; translate: var(--x) var(--y); scale: 1; } }
   @keyframes bfWander { from { translate: 0 0; } to { translate: var(--wx) var(--wy); } }
@@ -694,11 +698,41 @@
   .playing .lyr p.l { animation: lyrOn 1s ease both; animation-delay: calc(var(--i) * 1.3s); }
   @keyframes lyrOn { from { opacity: 0.2; translate: 0 8px; } to { opacity: 1; translate: 0 0; color: var(--rose-ink); } }
 
+  /* full-screen lily bloom */
+  .bloom { position: fixed; inset: 0; z-index: 70; overflow: hidden; pointer-events: auto; background: radial-gradient(120% 90% at 50% 45%, rgba(255, 236, 244, 0.97), rgba(255, 196, 223, 0.97) 70%, rgba(214, 160, 240, 0.97)); opacity: 0; animation: bloomIn 0.5s ease forwards; }
+  .bloom.out { animation: bloomOut 1.3s ease forwards; }
+  @keyframes bloomIn { to { opacity: 1; } }
+  @keyframes bloomOut { from { opacity: 1; } to { opacity: 0; } }
+  .bloom canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .bfl { position: absolute; inset: 0; overflow: hidden; }
+  .bl { position: absolute; width: var(--s); height: var(--s); margin: calc(var(--s) / -2) 0 0 calc(var(--s) / -2); opacity: 0; transform: scale(0.1) rotate(var(--r0)); will-change: transform, opacity; animation: blPop 0.9s cubic-bezier(0.22, 1.25, 0.4, 1) var(--dl) forwards; }
+  .bl img { display: block; width: 100%; height: 100%; }
+  @keyframes blPop { 0% { opacity: 0; transform: scale(0.1) rotate(var(--r0)); } 35% { opacity: 1; } 100% { opacity: 1; transform: scale(1) rotate(var(--r1)); } }
+  .bfx { position: absolute; left: 50%; top: 55%; width: var(--s); opacity: 0; will-change: transform, opacity; animation: bxFly var(--t) cubic-bezier(0.25, 0.7, 0.35, 1) var(--dl) forwards; }
+  .bimg { display: block; width: 100%; height: auto; will-change: transform; animation: bImgFlap 0.26s ease-in-out infinite alternate; }
+  @keyframes bImgFlap { from { transform: scaleX(1); } to { transform: scaleX(0.3); } }
+  @keyframes bxFly { 0% { opacity: 0; transform: translate(0, 0) scale(0.4); } 12% { opacity: 1; } 100% { opacity: 1; transform: translate(var(--dx), var(--dy)) scale(1.15); } }
+  .bloom-msg { position: absolute; left: 0; right: 0; bottom: 14%; text-align: center; font: 700 clamp(34px, 10vw, 54px) / 1.05 var(--f-hand); color: var(--rose-ink); opacity: 0; animation: msgIn 1s ease 2s forwards; z-index: 2; }
+  .bloom-msg span { display: inline-block; padding: 6px 24px 10px; background: rgba(255, 255, 255, 0.88); border-radius: 999px; box-shadow: 0 8px 24px rgba(194, 51, 111, 0.3); }
+  @keyframes msgIn { from { opacity: 0; translate: 0 12px; } to { opacity: 1; translate: 0 0; } }
+
+  /* flower meanings */
+  .mean { width: min(100%, 420px); margin: 22px auto 0; padding: 22px 18px 18px; background: var(--paper); border-radius: 26px; box-shadow: var(--shadow); text-align: left; animation: viewIn 0.8s ease both; }
+  .mean h3 { margin: 0 0 4px; font: 700 clamp(30px, 8.5vw, 38px) / 1.05 var(--f-hand); color: var(--rose-ink); text-align: center; }
+  .mean .sub { margin: 0 0 16px; text-align: center; font-size: 14px; color: var(--plum-soft); text-wrap: balance; }
+  .mean ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .mean li { display: grid; grid-template-columns: 60px 1fr; gap: 12px; align-items: center; padding: 12px 14px; background: linear-gradient(90deg, var(--blush), #fff); border-left: 4px solid var(--pink); border-radius: 6px 16px 16px 6px; opacity: 0; animation: meanIn 0.6s ease forwards; animation-delay: calc(var(--i) * 0.14s + 0.2s); }
+  @keyframes meanIn { from { opacity: 0; translate: 0 10px; } to { opacity: 1; translate: 0 0; } }
+  .mean .ico { width: 60px; height: 60px; object-fit: contain; animation: icoFloat 3.2s ease-in-out infinite alternate; animation-delay: calc(var(--i) * -0.5s); filter: drop-shadow(0 4px 5px rgba(200, 60, 120, 0.25)); }
+  @keyframes icoFloat { from { transform: translateY(2px) rotate(-5deg); } to { transform: translateY(-4px) rotate(5deg); } }
+  .mean b { display: block; font: 700 17px var(--f-display); color: var(--plum); }
+  .mean span.m { font-size: 14.5px; line-height: 1.4; color: var(--plum-soft); text-wrap: pretty; }
+
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; transition-delay: 0s !important; }
     .fh { display: none; }
     .bouquet, .is-open .bouquet { opacity: 1; }
-    .g-fx { display: none; }
+    .g-fx, .bloom { display: none; }
     .lyr p.l { opacity: 1; }
   }
 </style>
@@ -960,6 +994,20 @@
         </div>
       </div>
 
+      <section class="mean" id="mean" aria-label="What the flowers mean" hidden>
+        <h3>What these flowers say about you</h3>
+        <p class="sub">Every flower here has a meaning, and somehow they all sound like Clar.</p>
+        <ul>
+          <li style="--i:0"><img class="ico" src="art/lily-white.png" alt="" width="52" height="52"><div><b>White Lily</b><span class="m">Purity and sweetness. A soft heart and a kind soul. Yep, that is you, Clar.</span></div></li>
+          <li style="--i:1"><img class="ico" src="art/lily-pink.png" alt="" width="52" height="52"><div><b>Pink Lily</b><span class="m">Admiration and romance. It is exactly how I look at you, every single time.</span></div></li>
+          <li style="--i:2"><img class="ico" src="art/stargazer.png" alt="" width="52" height="52"><div><b>Pink Stargazer</b><span class="m">Abundance and prosperity. You make my ordinary days feel rich.</span></div></li>
+          <li style="--i:3"><img class="ico" src="art/bud.png" alt="" width="52" height="52"><div><b>Lily Bud</b><span class="m">New beginnings. Our story kept starting over, and this time it stayed.</span></div></li>
+          <li style="--i:4"><img class="ico" src="art/gyp.png" alt="" width="52" height="52"><div><b>Baby's Breath</b><span class="m">Everlasting love. Tiny, steady, always right beside the big moments.</span></div></li>
+          <li style="--i:5"><img class="ico" src="art/bf2.png" alt="" width="52" height="52"><div><b>Butterflies</b><span class="m">Joy and change. That flutter I get whenever you say my name.</span></div></li>
+          <li style="--i:6"><img class="ico" src="art/ribbon.png" alt="" width="52" height="52"><div><b>Satin Ribbon</b><span class="m">A promise tied up tight: I am not going anywhere.</span></div></li>
+        </ul>
+      </section>
+
       <div class="cta-wrap">
         <button class="cta" id="cta" type="button">CLICK HERE</button>
         <p class="ps">P.S. Somewhere up there is a locked page. You'll need a very special date to get in.</p>
@@ -976,7 +1024,7 @@
       <div class="board">
         <div class="cell">
           <figure class="pola" style="--r:-4deg">
-            <div class="shot" data-slot="1"><div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>Photo of Clar goes here</div></div>
+            <div class="shot has-img" data-slot="1"><img src="ph/clar1.jpg" alt="Clar smiling with a pink rose in her hair" width="560" height="560" decoding="async"></div>
             <figcaption>Exhibit A: Clar, being illegally cute</figcaption>
           </figure>
           <div class="sn a n-butter" style="--r:-5deg">Warning: dangerous levels of cute</div>
@@ -984,7 +1032,7 @@
         </div>
         <div class="cell">
           <figure class="pola" style="--r:3deg">
-            <div class="shot" data-slot="2"><div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>Photo goes here</div></div>
+            <div class="shot has-img" data-slot="2"><img src="ph/clar2.jpg" alt="Clar tilting her head with a pink rose in her hair" width="560" height="560" decoding="async"></div>
             <figcaption>Certified heart stealer</figcaption>
           </figure>
           <div class="sn a n-mint" style="--r:4deg">Loading prettiness... 100%</div>
@@ -992,7 +1040,7 @@
         </div>
         <div class="cell">
           <figure class="pola" style="--r:-2deg">
-            <div class="shot" data-slot="3"><div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>Photo goes here</div></div>
+            <div class="shot has-img" data-slot="3"><img src="ph/clar3.jpg" alt="Clar smiling softly in warm light" width="560" height="560" decoding="async"></div>
             <figcaption>Main character energy</figcaption>
           </figure>
           <div class="sn a n-pink" style="--r:-3deg">Breaking news: still my favorite</div>
@@ -1008,7 +1056,7 @@
         </div>
         <div class="cell">
           <figure class="pola" style="--r:-3deg">
-            <div class="shot" data-slot="5"><div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>Photo goes here</div></div>
+            <div class="shot has-img" data-slot="5"><img src="ph/clar5.jpg" alt="Clar doing a cute pout" width="560" height="560" decoding="async"></div>
             <figcaption>Caught being adorable</figcaption>
           </figure>
           <div class="sn a n-butter" style="--r:-5deg">Sorry officer, I can't stop staring</div>
@@ -1016,7 +1064,7 @@
         </div>
         <div class="cell">
           <figure class="pola" style="--r:2deg">
-            <div class="shot" data-slot="6"><div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>Photo goes here</div></div>
+            <div class="shot has-img" data-slot="6"><img src="ph/clar6.jpg" alt="Clar making a peace sign" width="560" height="560" decoding="async"></div>
             <figcaption>My favorite view</figcaption>
           </figure>
           <div class="sn a n-mint" style="--r:5deg">Best scenery. 10/10. Would stare again.</div>
@@ -1078,7 +1126,7 @@
       <div class="songcard" id="songCard">
         <div class="stage" id="stage">
           <div class="glow"></div>
-          <div class="disc" aria-hidden="true"><div class="dlabel"><b>YOU</b><small>LANY</small></div></div>
+          <div class="disc" aria-hidden="true"><div class="dlabel"><img src="ph/cover.jpg" alt="" width="480" height="480"></div></div>
           <div class="arm" aria-hidden="true"><i></i></div>
         </div>
         <div>
@@ -1404,6 +1452,7 @@
   <p class="foot">Made with love, bad jokes, and way too many hearts, for Clarinta.</p>
 </div>
 
+<div class="bloom" id="bloom" aria-hidden="true" hidden></div>
 <div class="overlay" id="ov" role="dialog" aria-modal="true" aria-labelledby="ovT" hidden>
   <div class="letter" id="letter">
     <button class="x" id="ovX" type="button" aria-label="Close letter">&times;</button>
@@ -1475,18 +1524,16 @@
 
   var gFx = $('gFx');
   var BF = [['#ff8fb8','#c2336f'],['#ffd86b','#f08a3c'],['#b79bff','#6a43c6'],['#8fe3ff','#3b8fd6'],['#ffffff','#e48bb6'],['#ff9fe0','#a63fa0']];
-  function bflySVG(c) {
-    return '<svg viewBox="-24 -20 48 40" focusable="false"><g class="wl" fill="' + c[0] + '" stroke="' + c[1] + '" stroke-width="1.2" stroke-linejoin="round"><use href="#bw"/><use href="#bd"/></g><g transform="scale(-1 1)"><g class="wr" fill="' + c[0] + '" stroke="' + c[1] + '" stroke-width="1.2" stroke-linejoin="round"><use href="#bw"/><use href="#bd"/></g></g><rect x="-1.6" y="-9" width="3.2" height="19" rx="1.6" fill="#4a2c4f"/><path d="M-.8-9Q-6-17-9-16M.8-9Q6-17 9-16" fill="none" stroke="#4a2c4f" stroke-width="1" stroke-linecap="round"/></svg>';
-  }
+  function bflyIMG(i) { return '<img class="bimg" src="art/bf' + (i % 6) + '.png" alt="" width="64" height="50">'; }
   function spawnFx() {
     clearFx();
     var W = gStack.getBoundingClientRect().width || 300;
-    for (var i = 0; i < 14; i++) {
+    for (var i = 0; i < 20; i++) {
       var side = i % 2 ? 1 : -1;
       var b = document.createElement('div'); b.className = 'bf';
       var sz = rnd(24, 40);
-      b.style.cssText = '--s:' + sz + 'px;--t:' + rnd(2.2, 3.6).toFixed(2) + 's;--dl:' + (0.9 + i * 0.22).toFixed(2) + 's;--x:' + Math.round(side * rnd(0.06, 0.52) * W) + 'px;--y:' + Math.round(-rnd(0.25, 1.05) * W) + 'px;--w2:' + rnd(2.4, 4.2).toFixed(2) + 's;--wx:' + Math.round(rnd(-40, 40)) + 'px;--wy:' + Math.round(rnd(-34, 34)) + 'px';
-      b.innerHTML = '<div class="bf-m">' + bflySVG(BF[i % BF.length]) + '</div>';
+      b.style.cssText = '--s:' + sz + 'px;--t:' + rnd(2.2, 3.6).toFixed(2) + 's;--dl:' + (0.9 + i * 0.16).toFixed(2) + 's;--x:' + Math.round(side * rnd(0.06, 0.52) * W) + 'px;--y:' + Math.round(-rnd(0.25, 1.05) * W) + 'px;--w2:' + rnd(2.4, 4.2).toFixed(2) + 's;--wx:' + Math.round(rnd(-40, 40)) + 'px;--wy:' + Math.round(rnd(-34, 34)) + 'px';
+      b.innerHTML = '<div class="bf-m">' + bflyIMG(i) + '</div>';
       gFx.appendChild(b);
     }
     for (var j = 0; j < 16; j++) {
@@ -1495,6 +1542,29 @@
       gFx.appendChild(q);
     }
   }
+
+  var bloom = $('bloom'), meanEl = $('mean'), gB1 = 0, gB2 = 0, gB3 = 0;
+  var bloomRAF = 0, bloomIv = 0, BLOOM_DUR = 4250, BLOOM_SPR = ['f-pink', 'f-white', 'f-star', 'f-peach', 'f-lilac', 'f-rose'];
+  function spawnBloom() {
+    var W = window.innerWidth, H = window.innerHeight, pts = [], cx = W / 2, cy = H / 2, i;
+    var cols = 4, rows = Math.max(6, Math.round(H / (W / 4)));
+    for (var r = 0; r < rows; r++) for (var c = 0; c < cols; c++) pts.push([(c + 0.5 + rnd(-0.35, 0.35)) / cols * W, (r + 0.5 + rnd(-0.35, 0.35)) / rows * H]);
+    for (i = 0; i < 8; i++) pts.push([rnd(0, W), rnd(0, H)]);
+    pts.sort(function (a, b) { return Math.hypot(a[0] - cx, a[1] - cy) - Math.hypot(b[0] - cx, b[1] - cy); });
+    var html = '';
+    pts.forEach(function (q, k) {
+      var sz = Math.round(rnd(0.7, 1.15) * Math.max(190, W * 0.62)), r0 = Math.round(rnd(-80, 80)), r1 = Math.round(rnd(-40, 40));
+      html += '<div class="bl" style="left:' + Math.round(q[0]) + 'px;top:' + Math.round(q[1]) + 'px;--s:' + sz + 'px;--r0:' + r0 + 'deg;--r1:' + r1 + 'deg;--dl:' + (0.05 + k * 0.03).toFixed(2) + 's"><img src="art/' + BLOOM_SPR[k % 6] + '.png" alt="" width="560" height="560"></div>';
+    });
+    for (i = 0; i < 18; i++) {
+      var ang = rnd(0, 6.283), dist = rnd(0.25, 0.62) * Math.max(W, H);
+      html += '<div class="bfx" style="--s:' + Math.round(rnd(52, 96)) + 'px;--t:' + rnd(1.6, 3.2).toFixed(2) + 's;--dl:' + (0.5 + i * 0.12).toFixed(2) + 's;--dx:' + Math.round(Math.cos(ang) * dist) + 'px;--dy:' + Math.round(Math.sin(ang) * dist) + 'px">' + bflyIMG(i) + '</div>';
+    }
+    html += '<p class="bloom-msg"><span>For you sayang</span></p>';
+    bloom.className = 'bloom'; bloom.innerHTML = html; bloom.hidden = false;
+  }
+  bloom.addEventListener('click', function () { if (!bloom.classList.contains('out')) { bloom.classList.add('out'); clearInterval(bloomIv); clearTimeout(gB2); clearTimeout(gB3); gB3 = setTimeout(endBloom, 1400); setTimeout(function () { if (gOpen) meanEl.hidden = false; }, 900); } });
+  function endBloom() { cancelAnimationFrame(bloomRAF); clearInterval(bloomIv); bloom.hidden = true; bloom.innerHTML = ''; bloom.className = 'bloom'; }
   function clearFx() { var n = gFx.querySelectorAll('.bf,.pt'); for (var k = 0; k < n.length; k++) n[k].remove(); }
   function setGarden(v) {
     if (v === gOpen) return;
@@ -1504,9 +1574,17 @@
     gEnv.setAttribute('aria-expanded', String(v));
     gEnv.tabIndex = v ? -1 : 0;
     gEnv.setAttribute('aria-label', v ? 'Envelope opened' : 'Envelope. Tap to open');
-    clearTimeout(gT1); clearTimeout(gT2); clearTimeout(gT3); clearTimeout(gT4);
+    clearTimeout(gT1); clearTimeout(gT2); clearTimeout(gT3); clearTimeout(gT4); clearTimeout(gB1); clearTimeout(gB2); clearTimeout(gB3);
     if (v) {
-      if (!reduce) spawnFx();
+      if (!reduce) {
+        spawnFx();
+        gB1 = setTimeout(spawnBloom, 650);
+        gB2 = setTimeout(function () { bloom.classList.add('out'); }, 650 + BLOOM_DUR + 300);
+        gB3 = setTimeout(endBloom, 650 + BLOOM_DUR + 1800);
+        try { gStack.scrollIntoView({ block: 'center', behavior: 'smooth' }); } catch (e) {}
+      }
+      meanEl.hidden = false;
+      if (!reduce) { meanEl.hidden = true; setTimeout(function () { if (gOpen) meanEl.hidden = false; }, 650 + BLOOM_DUR + 900); }
       gT1 = setTimeout(function () {
         var r = gBouquet.getBoundingClientRect();
         popHearts(r.left + r.width / 2, r.top + r.height * 0.3, 26);
@@ -1514,7 +1592,7 @@
       gT3 = setTimeout(function () { var r = gBouquet.getBoundingClientRect(); popHearts(r.left + r.width * 0.3, r.top + r.height * 0.4, 14); }, 2400);
       gT4 = setTimeout(function () { var r = gBouquet.getBoundingClientRect(); popHearts(r.left + r.width * 0.7, r.top + r.height * 0.35, 14); }, 3800);
       gT2 = setTimeout(function () { if (document.activeElement === gEnv) gAgain.focus({ preventScroll: true }); }, 2300);
-    } else { clearFx(); gEnv.focus({ preventScroll: true }); }
+    } else { clearFx(); endBloom(); meanEl.hidden = true; gEnv.focus({ preventScroll: true }); }
   }
   gEnv.addEventListener('click', function () { if (!gOpen) setGarden(true); });
   gEnv.addEventListener('keydown', function (e) { if ((e.key === 'Enter' || e.key === ' ') && !gOpen) { e.preventDefault(); setGarden(true); } });
